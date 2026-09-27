@@ -1,0 +1,6 @@
+# dotnet harness outputs
+bin/
+obj/
+*.user
+.vs/
+TestResults/

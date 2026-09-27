@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Offline harness that compiles the legacy (v1, Q20.12) fMath sources from the repository
+    root against a minimal UnityEngine stub and pins their known numeric defects.
+    Unity ignores folders ending with '~', so this project is never imported into a Unity project.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS0660;CS0661;CS1718;CS8981</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../ffloat.cs" />
+    <Compile Include="../../ffloat_sinLut.cs" />
+    <Compile Include="../../ffloat_tanLut.cs" />
+    <Compile Include="../../fVector2.cs" />
+    <Compile Include="../../fVector3.cs" />
+    <Compile Include="../../fQuaternion.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+  </ItemGroup>
+</Project>
