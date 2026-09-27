@@ -254,8 +254,8 @@ internal static class fWideMath
     /// Scale-invariant normalization of up to four wide components into Q1.30.
     /// Any common fixed-point scale of the inputs (Q16, Q30, Q32, Q60 ...) is irrelevant, so the
     /// same routine serves vectors, wide cross products and quaternions. Pass 0 for unused components.
-    /// The inputs are first shifted so that the largest magnitude lies in [2^29, 2^30), which keeps
-    /// the squared sum below 2^62 and preserves ~31 significant bits even for a 1-raw vector.
+    /// The inputs are first shifted so that the largest magnitude has 31 (three components) or 30
+    /// (four components) significant bits, so a 1-raw vector normalizes as accurately as a huge one.
     /// Symmetric: normalize(-v) == -normalize(v). Returns false only for the zero vector.
     /// </summary>
     internal static bool TryNormalizeQ30(long x, long y, long z, long w, out int ox, out int oy, out int oz, out int ow)
@@ -271,8 +271,14 @@ internal static class fWideMath
             return false;
         }
 
-        const long Limit = 1L << 30;
-        int shift = 30 - BitLength(m); // m << shift lies in [2^29, 2^30)
+        // Three components (w == 0): scale the largest magnitude into [2^30, 2^31); the squared sum
+        // stays below 3 * 2^62 and every int32 input is used without rounding.
+        // Four components: scale into [2^29, 2^30) so that 4 * squares < 2^62 and the length can be
+        // taken with one extra bit (sqrt(4 * sum)).
+        bool three = w == 0;
+        int targetBits = three ? 31 : 30;
+        long limit = 1L << targetBits;
+        int shift = targetBits - BitLength(m);
         long sx, sy, sz, sw;
         if (shift >= 0)
         {
@@ -287,21 +293,31 @@ internal static class fWideMath
                 sy = RoundShiftRightToEven(y, s);
                 sz = RoundShiftRightToEven(z, s);
                 sw = RoundShiftRightToEven(w, s);
-                // rounding may carry the largest component up to exactly 2^30; shift once more then
-                if (sx < Limit && sx > -Limit && sy < Limit && sy > -Limit &&
-                    sz < Limit && sz > -Limit && sw < Limit && sw > -Limit)
+                // rounding may carry the largest component up to exactly the limit; shift once more then
+                if (sx < limit && sx > -limit && sy < limit && sy > -limit &&
+                    sz < limit && sz > -limit && sw < limit && sw > -limit)
                     break;
                 s++;
             }
         }
 
-        ulong sum = (ulong)(sx * sx) + (ulong)(sy * sy) + (ulong)(sz * sz) + (ulong)(sw * sw); // < 2^62
-        ulong twiceLength = IntegerSqrtRounded(sum << 2); // 2*|v| with one extra bit, >= 2^30
-        long den = (long)twiceLength;
-        ox = (int)DivideRoundToEven(sx << 31, den);
-        oy = (int)DivideRoundToEven(sy << 31, den);
-        oz = (int)DivideRoundToEven(sz << 31, den);
-        ow = (int)DivideRoundToEven(sw << 31, den);
+        ulong sum = (ulong)(sx * sx) + (ulong)(sy * sy) + (ulong)(sz * sz) + (ulong)(sw * sw);
+        int numeratorShift;
+        long den;
+        if (three)
+        {
+            den = (long)IntegerSqrtRounded(sum);           // |v| >= 2^30, sum < 3 * 2^62
+            numeratorShift = 30;
+        }
+        else
+        {
+            den = (long)IntegerSqrtRounded(sum << 2);      // 2|v| >= 2^30, sum < 2^62
+            numeratorShift = 31;
+        }
+        ox = (int)DivideRoundToEven(sx << numeratorShift, den);
+        oy = (int)DivideRoundToEven(sy << numeratorShift, den);
+        oz = (int)DivideRoundToEven(sz << numeratorShift, den);
+        ow = (int)DivideRoundToEven(sw << numeratorShift, den);
         return true;
     }
 
