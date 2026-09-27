@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Offline tool runner (Unity ignores folders ending with a tilde). Usage: see README "Offline tools". -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS8981</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Tools/GenerateTrigLut.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Compile-only guard: builds Runtime/Core against .NET Standard 2.1 / C# 9 (Unity's API
+    compatibility level) with no UnityEngine reference, so APIs unavailable to Unity
+    (BitOperations, Math.BigMul, Int128 ...) or accidental Unity dependencies fail the build.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>fMath</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS8981;CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Runtime/Core/**/*.cs" />
+  </ItemGroup>
+</Project>
