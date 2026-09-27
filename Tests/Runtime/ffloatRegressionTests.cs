@@ -35,5 +35,19 @@ namespace fMath.Tests
         {
             Assert.That(ffloat.TrySqrt(-ffloat.One, out _), Is.False);
         }
+
+        [Test]
+        public void TanOfQuarterPi_IsOne()
+        {
+            // v1 returned ~0.05 for Tan(Pi/4)
+            Assert.That(fTrig.Tan(fAngle.FromTurnsFraction(1, 8)), Is.EqualTo(ffloat.One));
+        }
+
+        [Test]
+        public void AcosOfOne_IsZero()
+        {
+            // v1 returned -0.007 for Acos(1)
+            Assert.That(fTrig.Acos(funit.One), Is.EqualTo(fAngle.Zero));
+        }
     }
 }
