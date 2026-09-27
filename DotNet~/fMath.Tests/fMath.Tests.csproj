@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Offline test harness for fMath v2. It compiles Runtime/Core and Tests/Runtime exactly as Unity
+    does (no UnityEngine reference) so the NUnit suites run under plain `dotnet test`.
+    Unity ignores folders ending with '~'.
+
+      dotnet test                          # FMATH_VALIDATE on (default)
+      dotnet test -p:FMathValidate=false   # release semantics
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>fMath.Tests</AssemblyName>
+    <RootNamespace>fMath.Tests</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS8981;CS1718</NoWarn>
+    <FMathValidate Condition="'$(FMathValidate)' == ''">true</FMathValidate>
+    <DefineConstants Condition="'$(FMathValidate)' == 'true'">$(DefineConstants);FMATH_VALIDATE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Runtime/Core/**/*.cs" />
+    <Compile Include="../../Tests/Runtime/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+  </ItemGroup>
+</Project>
