@@ -12,6 +12,7 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>fMath.Tests</AssemblyName>
     <RootNamespace>fMath.Tests</RootNamespace>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -21,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Runtime/Core/**/*.cs" />
+    <Compile Include="../../Runtime/Diagnostics/**/*.cs" />
     <Compile Include="../../Tests/Runtime/**/*.cs" />
   </ItemGroup>
   <ItemGroup>

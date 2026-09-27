@@ -1,0 +1,8 @@
+function,domain,unit,samples,max_abs_error,max_rel_error,worst_input,monotonicity_failures,saturations
+ffloat.Sqrt,all non-negative raw (stride 97) + [0, 2^20],raw Q16,23176773,0.5,0.0009134,"raw 1880120257",0,0
+fTrig.Sin / Cos,full turn, stride 1021 raw,raw Q30,8413258,20.64,0.009703,"angle raw 4291425339 (cos)",0,0
+fTrig.Atan2,random y, x (1 raw .. full int32) + circle walk,rad,1999500,6.399E-09,2.141,"y -834016, x 1478491",0,0
+fVector3.TryNormalize,components 1 raw .. 1 cm,raw Q30,2999790,0.9782,3.702E-07,"0, -33, -3",0,0
+fVector3.TryNormalize,±2048 m,raw Q30,3000000,0.9789,0.0004104,"-27354, 17026632, 145446",0,0
+fVector3.TryNormalize,full int32 raw,raw Q30,3000000,0.9507,0.0001408,"-116918322, 1090901390, 6724749",0,0
+fQuaternion * fVector3,random rotation, |v| <= 2048 m,m,500000,2.06E-05,5.928E-07,"(-677.71489, -1914.62234, 1685.6792) by (-0.683447261, -0.572954285, -0.452214828, 0.011179271)",0,0

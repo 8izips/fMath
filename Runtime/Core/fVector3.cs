@@ -241,6 +241,9 @@ public struct fVector3 : IEquatable<fVector3>
             fWideMath.SaturateToInt(direction.z.RawValue - 2 * fWideMath.RoundShiftRightToEven(d * normal.z.RawValue, funit.FractionalBits)));
     }
 
+    /// <summary>v · n for a unit direction n, rounded to Q16.16 (e.g. signed distance along a plane normal).</summary>
+    public static ffloat Dot(fVector3 v, fUnitVector3 n) => ffloat.FromRaw(fWideMath.SaturateToInt(DotWithUnitQ16(v, n)));
+
     /// <summary>v · n (Q16.16 vector, Q1.30 unit) as a wide Q16 value.</summary>
     internal static long DotWithUnitQ16(fVector3 v, fUnitVector3 n)
     {

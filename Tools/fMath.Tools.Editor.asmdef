@@ -1,0 +1,19 @@
+{
+    "name": "fMath.Tools.Editor",
+    "rootNamespace": "fMath.Tools",
+    "references": [
+        "fMath",
+        "fMath.Diagnostics"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

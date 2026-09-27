@@ -1,0 +1,25 @@
+{
+  "name": "com.8izips.fmath",
+  "version": "2.0.0",
+  "displayName": "fMath",
+  "description": "Deterministic fixed-point math for rollback netcode: 32-bit state (ffloat Q16.16, funit Q1.30, fAngle Angle32) with 64-bit intermediates. No Burst, no native plugin, no UnityEngine dependency in the core assembly.",
+  "unity": "2021.3",
+  "keywords": [
+    "fixed-point",
+    "deterministic",
+    "rollback",
+    "lockstep",
+    "math"
+  ],
+  "author": {
+    "name": "8izips",
+    "url": "https://github.com/8izips/fMath"
+  },
+  "samples": [
+    {
+      "displayName": "Determinism Probe",
+      "description": "MonoBehaviour that prints the raw-hash, 10000-tick simulation hash and benchmarks on a device build (Windows / Android / iOS IL2CPP).",
+      "path": "Samples~/DeterminismProbe"
+    }
+  ]
+}

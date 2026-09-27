@@ -1,0 +1,8 @@
+{
+    "name": "fMath.DeterminismProbe",
+    "references": [
+        "fMath",
+        "fMath.Diagnostics"
+    ],
+    "autoReferenced": false
+}

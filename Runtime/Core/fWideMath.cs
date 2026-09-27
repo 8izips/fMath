@@ -167,10 +167,10 @@ internal static class fWideMath
     /// <summary>floor(sqrt(value)) for the full uint64 range (digit-by-digit, exact).</summary>
     internal static ulong IntegerSqrt(ulong value)
     {
+        if (value == 0)
+            return 0;
         ulong result = 0;
-        ulong bit = 1UL << 62;
-        while (bit > value)
-            bit >>= 2;
+        ulong bit = 1UL << ((BitLength(value) - 1) & ~1); // highest power of four <= value
 
         while (bit != 0)
         {

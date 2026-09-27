@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Tools/GenerateTrigLut.cs" />
+    <Compile Include="../../Runtime/Core/**/*.cs" />
+    <Compile Include="../../Runtime/Diagnostics/**/*.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="PrecisionReport.cs" />
   </ItemGroup>
 </Project>
