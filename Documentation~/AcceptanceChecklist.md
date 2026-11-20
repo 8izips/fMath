@@ -2,8 +2,15 @@
 
 凡例: [x] 実装・検証済み / [-] 対象外（理由記載） / [ ] 未検証（理由記載）
 
-検証環境: dotnet 10（CoreCLR x64、`DotNet~/fMath.Tests`、FMATH_VALIDATE on/off両方）と
+検証環境: dotnet 10（CoreCLR x64、`Tests~/Diagnostics/DotNet~/fMath.Tests`、FMATH_VALIDATE on/off両方）と
 Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
+
+2026-11-20修正確認: Unity 6000.6.7f1の一時プロジェクトで関連PlayModeテスト66件が通過
+（既存・追加回帰テスト64件、計測処理を直接実行する一時検証2件）。
+修正前のコードでは、新しい回帰テスト10ケース中4ケースが失敗することを確認した。
+対象はWithinAngle、wide FromFraction、Truncate、乗算・除算のchecksum、Quaternion精度レポートの独立参照。
+既存corpusと10000tick simulationのgolden hashは維持。現在版のCoreCLR・IL2CPP・実機検証と性能比較は未実施。
+以下の以前の計測値・プラットフォーム検証結果は履歴として残している。
 
 ## A. 基本仕様
 - [x] ffloat 4byte / Q16.16
@@ -17,7 +24,7 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
 ## B. Core分離
 - [x] CoreにUnityEngineなし（`Runtime/Core/fMath.asmdef` noEngineReferences、netstandard2.1ビルドガード）
 - [x] Native Plugin依存なし（DllImport・FMATH_ENABLE_NATIVE_PLUGIN削除）
-- [x] Runtime LUT生成なし（`Tools/GenerateTrigLut.cs` がdecimal級数でオフライン生成、`verify-lut` で一致確認）
+- [x] Runtime LUT生成なし（`Editor/GenerateTrigLut.cs` がdecimal級数でオフライン生成、`verify-lut` で一致確認）
 - [x] float混合演算がSimulation API外（float/double operator・コンストラクタ削除。float→fixedは `fMath.Unity` のみ）
 
 ## C. Scalar
@@ -78,7 +85,7 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
 - [x] LookRotation
 - [x] ToEuler unit mismatch
   - v1の不具合は最初のコミット（`test: capture legacy fMath numeric regressions`）で固定し、
-    v2では `Tests/Runtime/*RegressionTests.cs` が修正後の挙動を検証する。
+    v2では `Tests~/Runtime/*RegressionTests.cs` が修正後の挙動を検証する。
 
 ## H. Determinism
 - [x] Editor Mono raw hash（golden一致）
@@ -89,7 +96,7 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
 - [x] 10000tick simulation hash一致（final `13D4456E86187E21`、chain `AB4052045BE65F56`）
 - [x] rollback restore/resim一致
   - 実機検証は `Samples~/DeterminismProbe` をビルドし、表示されたhashをgolden値と比較する。
-    PlayMode testsはplayerでも実行できる（`Tests/Runtime` は全プラットフォーム対象）。
+    PlayMode testsはplayerでも実行できる（`Tests~/Runtime` は全プラットフォーム対象）。
 
 ## I. Performance
 - [x] hot path GC 0（テストで3 pass計測、CoreCLR / Mono とも0 byte）

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Drop on a GameObject in an empty scene and build for the target (Windows / Android ARM64 / iOS ARM64
 /// IL2CPP, Release). It shows the raw hash, the 10000-tick simulation hash and benchmark results; the
-/// hashes must equal the golden values in Tests/Runtime/fDeterminismTests.cs.
+/// hashes must equal the golden values in Tests~/Runtime/fDeterminismTests.cs.
 /// </summary>
 public class fMathDeterminismProbeBehaviour : MonoBehaviour
 {

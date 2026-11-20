@@ -1,19 +1,28 @@
 # fMath v2 benchmark
 
 Burst、Jobs、Native Pluginなし。ベンチマークは `fMath.Diagnostics.fMathBenchmark` にあり、同じコードを
-dotnet（`dotnet run -c Release --project DotNet~/fMath.Tools -- benchmark`）、Unity Editor
+dotnet（`dotnet run -c Release --project Tests~/Diagnostics/DotNet~/fMath.Tools -- benchmark`）、Unity Editor
 （`Tools/fMath/Run Benchmarks`、またはbatch実行 `fMath.Tools.fMathEditorDiagnostics.RunBatch`）、
 実機（`Samples~/DeterminismProbe`）で実行できる。
 
+Unity Editorおよび実機では、先に `Tests~/Diagnostics` フォルダ全体をプロジェクトの
+`Assets/fMathDiagnostics` へコピーする（末尾の `~` を外す）。通常のインポートでは診断コードは含まれない。
+
 計測環境: Windows 11 x64（Unityプロジェクトと同じマシン）、2026-09-27。
+
+以下は修正前の履歴値であり、現在版の性能保証ではない。2026-11-20に乗算・除算の
+ベンチマークを、全反復の結果をlongのchecksumへ加算する方式へ修正した。
+この2項目の旧値は比較対象から除外し、再計測までは未計測とする。新しい計測値にはchecksum加算の負荷も含まれる。
+また `WithinAngle` は丸め誤差を避けるatan2ベースの判定へ変更したため、game-likeの旧値も現在版とは分けて扱う。
+Unity 6000.6.7f1では4096反復のmicrobenchmarkの動作とchecksum再現性を確認したが、性能比較用の再計測は行っていない。
 
 ## Unity 6000.6.0f1 Editor（Mono、Code Optimization = Debug、FMATH_VALIDATE off）
 
 | micro | ns/op | allocated bytes |
 |---|---:|---:|
 | ffloat add | 11.5 | 0 |
-| ffloat mul | 18.4 | 0 |
-| ffloat div | 31.1 | 0 |
+| ffloat mul（checksum修正後） | 未再計測 | 未再計測 |
+| ffloat div（checksum修正後） | 未再計測 | 未再計測 |
 | ffloat sqrt | 140.4 | 0 |
 | fTrig sin+cos | 50.4 | 0 |
 | fTrig atan2 | 56.9 | 0 |
@@ -40,8 +49,8 @@ Editor Mono（Debugコード最適化）でも、1+8 rollbackは1フレーム0.1
 | micro | ns/op | allocated bytes |
 |---|---:|---:|
 | ffloat add | 0.4 | 0 |
-| ffloat mul | 1.5 | 0 |
-| ffloat div | 5.1 | 0 |
+| ffloat mul（checksum修正後） | 未再計測 | 未再計測 |
+| ffloat div（checksum修正後） | 未再計測 | 未再計測 |
 | ffloat sqrt | 76.8 | 0 |
 | fTrig sin+cos | 11.9 | 0 |
 | fTrig atan2 | 14.2 | 0 |

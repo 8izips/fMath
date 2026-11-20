@@ -81,7 +81,8 @@ public readonly struct fUnitVector2 : IEquatable<fUnitVector2>
     {
         if (limit.RawValue >= 0x80000000u)
             return true;
-        return DotWide(a, b) >= (long)fTrig.Cos(limit).RawValue << funit.FractionalBits;
+        // atan2(cross, dot) is invariant to the rounded lengths of a and b.
+        return SignedAngle(a, b).AbsRaw <= limit.RawValue;
     }
 
     public static fAngleDelta SignedAngle(fUnitVector2 from, fUnitVector2 to) => fTrig.Atan2Wide(CrossWide(from, to), DotWide(from, to)).ToDelta();

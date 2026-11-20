@@ -1,0 +1,10 @@
+{
+    "name": "fMath.Diagnostics.Editor",
+    "rootNamespace": "fMath.Tools",
+    "references": [
+        "fMath",
+        "fMath.Diagnostics"
+    ],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": false
+}

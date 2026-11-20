@@ -66,11 +66,35 @@ public readonly struct ffloat : IEquatable<ffloat>, IComparable<ffloat>
     /// <summary>numerator / denominator for wide inputs, e.g. milli-units: FromFraction(1250L, 1000L).</summary>
     public static ffloat FromFraction(long numerator, long denominator)
     {
-        // numerator << 16 must not overflow: fall back to a pre-divided form for huge numerators.
+        // numerator << 16 must not overflow. For wide inputs, retain the remainder while
+        // generating the 16 fractional bits, then round only once.
         if (numerator > (long.MaxValue >> FractionalBits) || numerator < (long.MinValue >> FractionalBits))
         {
-            long q = fWideMath.DivideRoundToEven(numerator, denominator);
-            return new ffloat(fWideMath.SaturateToInt(q > (long.MaxValue >> FractionalBits) ? long.MaxValue : q < (long.MinValue >> FractionalBits) ? long.MinValue : q << FractionalBits));
+            if (denominator == 0)
+                return new ffloat(fWideMath.SaturateToInt(fWideMath.DivideRoundToEven(numerator, denominator)));
+
+            bool negative = (numerator < 0) != (denominator < 0);
+            ulong n = fWideMath.AbsToULong(numerator);
+            ulong d = fWideMath.AbsToULong(denominator);
+            ulong raw = n / d;
+            if (raw > 32768UL)
+                return new ffloat(fWideMath.SaturateToInt(negative ? long.MinValue : long.MaxValue));
+
+            ulong remainder = n % d;
+            for (int bit = 0; bit < FractionalBits; bit++)
+            {
+                raw <<= 1;
+                remainder <<= 1; // remainder < d <= 2^63, so doubling fits in uint64.
+                if (remainder >= d)
+                {
+                    remainder -= d;
+                    raw |= 1UL;
+                }
+            }
+            ulong rest = d - remainder;
+            if (remainder > rest || (remainder == rest && (raw & 1UL) != 0))
+                raw++;
+            return new ffloat(fWideMath.SaturateToInt(negative ? -(long)raw : (long)raw));
         }
         return new ffloat(fWideMath.SaturateToInt(fWideMath.DivideRoundToEven(numerator << FractionalBits, denominator)));
     }
@@ -196,7 +220,7 @@ public readonly struct ffloat : IEquatable<ffloat>, IComparable<ffloat>
         return new ffloat(fWideMath.SaturateToInt(fWideMath.RoundShiftRightToEven(x._rawValue, FractionalBits) << FractionalBits));
     }
 
-    public static ffloat Truncate(ffloat x) => x._rawValue >= 0 ? Floor(x) : -Floor(-x);
+    public static ffloat Truncate(ffloat x) => new ffloat((x._rawValue / RawOne) * RawOne);
 
     public int FloorToInt() => _rawValue >> FractionalBits;
     public int CeilToInt() => (int)(-((-(long)_rawValue) >> FractionalBits));

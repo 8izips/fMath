@@ -22,8 +22,10 @@ Unity Package Managerで `https://github.com/8izips/fMath.git` を追加する�
 |---|---|
 | `fMath`（Runtime/Core） | 数値型と演算。`noEngineReferences`、UnityEngine非依存 |
 | `fMath.Unity`（Runtime/Unity） | float / Vector3 / Quaternion との変換（Authoring・Presentation境界専用） |
-| `fMath.Diagnostics`（Runtime/Diagnostics） | 決定性probe、8 agent simulation、benchmark |
-| `fMath.Tools.Editor`（Tools） | LUT再生成、診断メニュー |
+| `fMath.Tools.Editor`（Editor） | LUT再生成・検証 |
+| `fMath.Tests`（Tests~/Runtime） | 数値・Unity変換・決定性テストを統合（通常はインポートされない） |
+| `fMath.Diagnostics`（Tests~/Diagnostics） | 任意導入の決定性probe、8 agent simulation、benchmark（通常はインポートされない） |
+| `fMath.Diagnostics.Editor`（Tests~/Diagnostics/Editor） | 任意導入の診断メニュー（Editor専用） |
 
 ## 型
 
@@ -53,7 +55,7 @@ pos += new fVector3(dir2.x * speed, ffloat.Zero, dir2.y * speed) * dt;
 // 範囲判定: Sqrtなし（64bit二乗距離の比較）
 bool hit = fVector3.IsWithinDistance(pos, enemyPos, ffloat.FromInt(3));
 
-// 角度判定: acosなし（dot >= cos(limit)）
+// 角度判定: atan2で単位ベクトルの丸め誤差を考慮
 fQuaternion q = fQuaternion.AngleAxis(yaw, fUnitVector3.up);
 fUnitVector3 forward = q * fUnitVector3.forward;
 if (hit && fVector3.TryNormalize(enemyPos - pos, out fUnitVector3 toEnemy))
@@ -87,29 +89,43 @@ fAngle facing = fMathUnityConversions.DegreesToAngle(90f);
 
 ## 精度・性能・決定性
 
-- 精度: `Documentation~/PrecisionReport.md`（Sqrt ±0.5 raw、Sin/Cos 1.9e-8、Atan2 6.4e-9 rad、Normalize < 1 raw Q30、2048 mでの回転誤差 2e-5 m、単調性違反 0）
-- 性能: `Documentation~/Benchmark.md`（Unity Editor Monoで8 agent rollback 1+8が 0.17 ms/frame、hot path GC 0）
-- 決定性: 固定入力corpus（`Tests/Determinism/fmath_v2_input_vectors.bin`）に全APIを適用したraw hashと、10000 tickの8 agent simulation hashをgolden値として `Tests/Runtime/fDeterminismTests.cs` で検証。
+- 精度: `Documentation~/PrecisionReport.md`（生成済みQuaternionの回転誤差と、入力の軸・角度からの総合誤差を別々に記録）
+- 性能: `Documentation~/Benchmark.md`（過去の計測結果と計測方法の変更点。乗算・除算は全反復の結果をchecksumへ反映）
+- 決定性: 固定入力corpus（`Tests~/Determinism/fmath_v2_input_vectors.bin`）に全APIを適用したraw hashと、10000 tickの8 agent simulation hashをgolden値として `Tests~/Runtime/fDeterminismTests.cs` で検証。
   CoreCLR x64とUnity Monoで一致。実機は `Samples~/DeterminismProbe` をビルドして比較する。
 - 受け入れ状況: `Documentation~/AcceptanceChecklist.md`
+
+この修正版では `WithinAngle` の境界判定、wide `FromFraction`、`Truncate(MinValue)` の結果が変わる。
+raw値の保存形式はv2のままだが、修正前後を同じ決定性セッションで混在させないよう、導入時に `GameSimulationVersion` を更新する。
 
 ## テスト・ツール
 
 ```bash
-dotnet test DotNet~/fMath.Tests
+dotnet test Tests~/Diagnostics/DotNet~/fMath.Tests
 ```
 
 ```bash
-dotnet test DotNet~/fMath.Tests -c Release -p:FMathValidate=false
+dotnet test Tests~/Diagnostics/DotNet~/fMath.Tests -c Release -p:FMathValidate=false
 ```
 
 ```bash
-dotnet run -c Release --project DotNet~/fMath.Tools -- verify-lut
+dotnet run -c Release --project Tests~/Diagnostics/DotNet~/fMath.Tools -- verify-lut
 ```
 
-`DotNet~/fMath.Tools` のコマンド: `generate-lut` / `verify-lut` / `write-corpus` / `hash` / `benchmark` / `precision-report`。
-Unityでは package を `testables` に追加すると `Tests/Runtime`（PlayMode）と `Tests/Unity` が実行できる。
-`DotNet~/fMath.Core.NetStandard` は Runtime/Core を .NET Standard 2.1 / C# 9 でビルドし、Unityで使えないAPIの混入を防ぐ。
+`Tests~/Diagnostics/DotNet~/fMath.Tools` のコマンド: `generate-lut` / `verify-lut` / `write-corpus` / `hash` / `benchmark` / `precision-report`。
+テスト・診断コードは `Tests~` に集約してあり、通常のUnityインポート・ビルドには含まれない。
+Unityでテストを実行する場合は `Tests~` 全体をプロジェクトの `Assets/fMathTests` へコピーする（末尾の `~` を外す）。
+数値・Unity変換・決定性テストは1つのテスト用アセンブリ `fMath.Tests` としてUnity Test Runnerで実行できる。
+`testables` への追加だけでは `Tests~` はインポートされない。
+実機サンプル `Samples~/DeterminismProbe` に必要な診断コードだけを導入する場合は、
+`Tests~/Diagnostics` を `Assets/fMathDiagnostics` へコピーする。テスト全体と診断だけのコピーを併用しないこと。
+詳細は `Tests~/README.md`。
+
+`Tests~/Diagnostics/DotNet~` はUnityを起動せずに使う開発用ツールで、ライブラリの導入・実行には不要。
+`fMath.Tests` はUnity依存の変換テストを除くテストを.NET上で実行し、`fMath.Tools` はLUT生成・corpus生成・hash・benchmark・精度レポート生成を提供する。
+`fMath.Core.NetStandard` は Runtime/Core と診断コードを .NET Standard 2.1 / C# 9 でビルドし、対象外APIの混入を検出する。
+精度レポート生成処理は `Tests~/Diagnostics/DotNet~/fMath.Tools/PrecisionReport.cs` にあり、レポート再生成のために保持している。
+オフライン用プロジェクトは、コピー先ではなく元のパッケージ内で実行する。
 
 ## v1からの変更
 

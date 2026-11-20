@@ -22,7 +22,7 @@ namespace fMath.Tests
             // 範囲判定: Sqrtなし（64bit二乗距離の比較）
             bool hit = fVector3.IsWithinDistance(pos, enemyPos, ffloat.FromInt(3));
 
-            // 角度判定: acosなし（dot >= cos(limit)）
+            // 角度判定: atan2で単位ベクトルの丸め誤差を考慮
             fQuaternion q = fQuaternion.AngleAxis(yaw, fUnitVector3.up);
             fUnitVector3 forward = q * fUnitVector3.forward;
             if (hit && fVector3.TryNormalize(enemyPos - pos, out fUnitVector3 toEnemy))

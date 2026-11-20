@@ -64,8 +64,10 @@ namespace fMath.Diagnostics
 
             const int M = INPUT_COUNT - 1;
             results.Add(Measure("ffloat add", iterations, n => { ffloat acc = ffloat.Zero; for (int i = 0; i < n; i++) acc += ff[i & M]; Sink += acc.RawValue; }));
-            results.Add(Measure("ffloat mul", iterations, n => { ffloat acc = ffloat.One; for (int i = 0; i < n; i++) acc = ff[i & M] * ff[(i + 1) & M]; Sink += acc.RawValue; }));
-            results.Add(Measure("ffloat div", iterations, n => { ffloat acc = ffloat.Zero; for (int i = 0; i < n; i++) acc = ff[i & M] / ff[(i + 7) & M]; Sink += acc.RawValue; }));
+            // Every product/quotient contributes to the observable checksum. These timings include
+            // the checksum addition, just like the other microbenchmarks.
+            results.Add(Measure("ffloat mul", iterations, n => { long acc = 0; for (int i = 0; i < n; i++) acc += (ff[i & M] * ff[(i + 1) & M]).RawValue; Sink += acc; }));
+            results.Add(Measure("ffloat div", iterations, n => { long acc = 0; for (int i = 0; i < n; i++) acc += (ff[i & M] / ff[(i + 7) & M]).RawValue; Sink += acc; }));
             results.Add(Measure("ffloat sqrt", iterations, n => { int acc = 0; for (int i = 0; i < n; i++) acc += ffloat.Sqrt(ffloat.Abs(ff[i & M])).RawValue; Sink += acc; }));
             results.Add(Measure("fTrig sin+cos", iterations, n => { int acc = 0; for (int i = 0; i < n; i++) acc += fTrig.Sin(angles[i & M]).RawValue + fTrig.Cos(angles[i & M]).RawValue; Sink += acc; }));
             results.Add(Measure("fTrig atan2", iterations, n => { uint acc = 0; for (int i = 0; i < n; i++) acc += fTrig.Atan2(ff[i & M], ff[(i + 3) & M]).RawValue; Sink += acc; }));

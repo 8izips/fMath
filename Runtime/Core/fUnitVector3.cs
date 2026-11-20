@@ -106,13 +106,12 @@ public readonly struct fUnitVector3 : IEquatable<fUnitVector3>
     #endregion
 
     #region Angles
-    /// <summary>angle(a, b) &lt;= limit using dot &gt;= cos(limit); no acos. limit is taken in [0°, 180°].</summary>
+    /// <summary>angle(a, b) &lt;= limit using atan2, independent of rounded unit lengths. limit is taken in [0°, 180°].</summary>
     public static bool WithinAngle(fUnitVector3 a, fUnitVector3 b, fAngle limit)
     {
         if (limit.RawValue >= 0x80000000u)
             return true;
-        long cosLimit = (long)fTrig.Cos(limit).RawValue << funit.FractionalBits; // Q2.60
-        return DotWide(a, b) >= cosLimit;
+        return AngleUsingAtan2(a, b).RawValue <= limit.RawValue;
     }
 
     /// <summary>Unsigned angle in [0°, 180°] as atan2(|a × b|, a · b); accurate for tiny angles.</summary>

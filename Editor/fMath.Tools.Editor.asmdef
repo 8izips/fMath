@@ -2,8 +2,7 @@
     "name": "fMath.Tools.Editor",
     "rootNamespace": "fMath.Tools",
     "references": [
-        "fMath",
-        "fMath.Diagnostics"
+        "fMath"
     ],
     "includePlatforms": [
         "Editor"

@@ -51,6 +51,42 @@ namespace fMath.Tests
         }
 
         [Test]
+        [Category("ReviewFixes")]
+        public void WideFractions_RoundOnceAgainstBigInteger()
+        {
+            long[] inputs = { long.MinValue, long.MinValue + 1, -(3L << 60), -(19L << 45),
+                -(17L << 45), -1, 0, 1, 17L << 45, 19L << 45, 3L << 60, long.MaxValue };
+            long[] denominators = { long.MinValue, -(1L << 62), -(1L << 61), -65536, -1,
+                1, 65536, 1L << 61, 1L << 62, long.MaxValue };
+            foreach (long numerator in inputs)
+            foreach (long denominator in denominators)
+            {
+                BigInteger scaled = (BigInteger)numerator * ffloat.RawOne;
+                BigInteger divisor = BigInteger.Abs((BigInteger)denominator);
+                BigInteger expected = BigInteger.DivRem(BigInteger.Abs(scaled), divisor, out BigInteger remainder);
+                if (remainder * 2 > divisor || (remainder * 2 == divisor && !expected.IsEven))
+                    expected++;
+                if ((numerator < 0) != (denominator < 0)) expected = -expected;
+                expected = BigInteger.Max(int.MinValue, BigInteger.Min(int.MaxValue, expected));
+                Assert.That(ffloat.FromFraction(numerator, denominator).RawValue, Is.EqualTo((int)expected),
+                    $"{numerator}/{denominator}");
+            }
+        }
+
+        [TestCase(int.MinValue, int.MinValue)]
+        [TestCase(int.MinValue + 1, -2147418112)]
+        [TestCase(int.MaxValue, 2147418112)]
+        [TestCase(-98304, -65536)]
+        [TestCase(-1, 0)]
+        [TestCase(1, 0)]
+        [TestCase(98304, 65536)]
+        [Category("ReviewFixes")]
+        public void Truncate_RoundsTowardZeroAtBoundaries(int raw, int expected)
+        {
+            Assert.That(ffloat.Truncate(R(raw)).RawValue, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void AddSub_Saturate()
         {
             Assert.That((ffloat.One + ffloat.Half).RawValue, Is.EqualTo(98304));

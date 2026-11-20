@@ -18,7 +18,7 @@
   "samples": [
     {
       "displayName": "Determinism Probe",
-      "description": "MonoBehaviour that prints the raw-hash, 10000-tick simulation hash and benchmarks on a device build (Windows / Android / iOS IL2CPP).",
+      "description": "Requires copying Tests~/Diagnostics to Assets/fMathDiagnostics first. MonoBehaviour that prints the raw-hash, 10000-tick simulation hash and benchmarks on a device build (Windows / Android / iOS IL2CPP).",
       "path": "Samples~/DeterminismProbe"
     }
   ]

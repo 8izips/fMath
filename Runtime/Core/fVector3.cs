@@ -181,7 +181,7 @@ public struct fVector3 : IEquatable<fVector3>
         return side < 0 ? -delta : delta;
     }
 
-    /// <summary>True when the angle between a and b is at most limit (dot threshold, no acos).</summary>
+    /// <summary>True when the angle between a and b is at most limit (atan2, no acos).</summary>
     public static bool WithinAngle(fVector3 a, fVector3 b, fAngle limit)
     {
         if (!TryNormalize(a, out fUnitVector3 ua) || !TryNormalize(b, out fUnitVector3 ub))

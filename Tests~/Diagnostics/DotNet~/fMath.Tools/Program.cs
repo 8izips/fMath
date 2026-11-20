@@ -10,7 +10,7 @@ namespace fMath.Tools
         {
             string repoRoot = FindRepoRoot();
             string coreDirectory = Path.Combine(repoRoot, "Runtime", "Core");
-            string corpusPath = Path.Combine(repoRoot, "Tests", "Determinism", "fmath_v2_input_vectors.bin");
+            string corpusPath = Path.Combine(repoRoot, "Tests~", "Determinism", "fmath_v2_input_vectors.bin");
             string command = args.Length > 0 ? args[0] : "help";
 
             switch (command)
