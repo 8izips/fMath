@@ -1,12 +1,14 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 /// <summary>
 /// Rotation quaternion with Q1.30 components (16 bytes).
 ///
 /// Products and sums of products are evaluated in 64 bits (Q2.60) and rounded once. Every API that
-/// builds a rotation (AngleAxis, FromToRotation, LookRotation, Lerp, Slerp, Euler) returns a
-/// normalized quaternion. Vectors are rotated through a Q1.30 rotation matrix, so rotation does not
+/// builds a rotation (AngleAxis, FromToRotation, LookRotation, Lerp, Euler) normalizes its result.
+/// Slerp assumes unit inputs; its endpoints preserve their raw values (with shortest-arc sign).
+/// Vectors are rotated through a Q1.30 rotation matrix, so rotation does not
 /// change vector length beyond rounding (a fraction of a raw unit at 2048 m).
 ///
 /// operator == is raw-exact. q and -q describe the same rotation: use <see cref="IsSameRotation"/>
@@ -387,6 +389,14 @@ public readonly struct fQuaternion : IEquatable<fQuaternion>
     {
         if (DotWide(a, b) < 0)
             b = Negate(b);
+        return NormalizeLinearBlend(a, b, t);
+    }
+
+    // Callers have already selected the shorter arc. Keep the product/rounding order shared
+    // without repeating DotWide in the close-angle Slerp and RotateTowards paths.
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static fQuaternion NormalizeLinearBlend(fQuaternion a, fQuaternion b, ffloat t)
+    {
         long tr = t.RawValue, ir = ffloat.RawOne - (long)t.RawValue;
         // Q1.30 * Q16.16 products; the common scale is removed by normalization
         return TryNormalizeWide(
@@ -414,7 +424,7 @@ public readonly struct fQuaternion : IEquatable<fQuaternion>
         if (t.RawValue >= ffloat.RawOne)
             return b;
         if (dot >= NLERP_THRESHOLD_Q60)
-            return LerpUnclamped(a, b, t);
+            return NormalizeLinearBlend(a, b, t);
 
         fAngle theta = HalfAngleFromDot(dot);
         return SlerpByAngle(a, b, theta, theta * t);
@@ -426,7 +436,14 @@ public readonly struct fQuaternion : IEquatable<fQuaternion>
         long d = fWideMath.RoundShiftRightToEven(dotQ60, Q30);
         if (d > ONE) d = ONE;
         long sin = (long)fWideMath.IntegerSqrtRounded((ulong)(ONE_Q60 - d * d));
-        return fTrig.Atan2Wide(sin, d);
+        // Both components are already nonnegative Q1.30. Use the same octant LUT and
+        // rounding as Atan2Wide without rechecking signs, bit length or common scaling.
+        bool swap = sin > d;
+        ulong numerator = (ulong)(swap ? d : sin);
+        ulong denominator = (ulong)(swap ? sin : d);
+        ulong ratio = fWideMath.DivideRoundToEven(numerator << Q30, denominator);
+        uint octant = fTrig.AtanOctant(ratio);
+        return fAngle.FromRaw(swap ? 0x40000000u - octant : octant);
     }
 
     /// <summary>sin(θ - φ) a + sin(φ) b, normalized (the 1 / sin θ factor cancels).</summary>
@@ -455,7 +472,7 @@ public readonly struct fQuaternion : IEquatable<fQuaternion>
         }
         fAngle theta = HalfAngleFromDot(dot);
         if (dot >= NLERP_THRESHOLD_Q60)
-            return LerpUnclamped(from, to, ffloat.FromRaw(fWideMath.SaturateToInt(fWideMath.DivideRoundToEven((long)maxDelta.RawValue << ffloat.FractionalBits, angle.RawValue))));
+            return NormalizeLinearBlend(from, to, ffloat.FromRaw(fWideMath.SaturateToInt(fWideMath.DivideRoundToEven((long)maxDelta.RawValue << ffloat.FractionalBits, angle.RawValue))));
         return SlerpByAngle(from, to, theta, maxDelta.Half);
     }
 

@@ -1,14 +1,14 @@
 {
     "name": "fMath",
     "rootNamespace": "",
-    "references": [],
+    "references": ["Unity.Burst"],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": true
+    "noEngineReferences": false
 }

@@ -12,6 +12,16 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
 既存corpusと10000tick simulationのgolden hashは維持。現在版のCoreCLR・IL2CPP・実機検証と性能比較は未実施。
 以下の以前の計測値・プラットフォーム検証結果は履歴として残している。
 
+2026-11-21: sqrt / normalizeをraw互換のまま最適化。関連PlayModeテスト97件、新旧10万組と追加境界1000組の比較、golden hash一致を確認。Windows Mono Development Playerで旧・新を同一Player内で6組比較し、sqrt約53%、ゲーム範囲normalize約56%の処理時間短縮、計測中の割り当て0 byteを確認。条件と生データは `Benchmark.md` を参照。
+
+2026-11-21全体更新（Burst導入前の基準）: micro 13項目とgame-like 5項目をWindows Mono Development Playerで各6回計測。全108行・12グループ、checksum再現性、計測中managed allocation 0 byteを確認。生データは `FullBenchmark-2026-11-21.csv`。
+
+2026-11-21 Slerp更新（当時はBurstを保留）: 通常C#のSlerp / RotateTowardsの重複計算を削減し、関連47テスト、各10万ケースのraw一致とgolden hash維持を確認。6組の同一Mono Development Player比較は `SlerpBenchmark-2026-11-21.csv` と `Benchmark.md` を参照。
+
+2026-11-21 Burst導入: 隔離Advisorの境界確認・事前レビュー後、Unity 6000.6 / Burst 2依存へ変更。関連PlayMode66件とgoldenが合格。FMATH_VALIDATE off/on両Playerでsqrt / normalize / Slerp各10万入力、単発・バッチの全rawと成功フラグが一致し、6入口native marker、バッファ境界、診断差を確認。非検証Playerの同一プロセス6組・96ブロックを計測し全checksum一致・allocation 0。`BurstBenchmark-2026-11-21.csv`と`Benchmark.md`参照。IL2CPP / Release / ARM / モバイル / 現行CoreCLRは未検証。
+
+2026-11-21 最終全体更新: Burst依存と全最適化を含む現行ソースでmanaged全18項目を各6回再測定。全108行・12グループ、suite checksum再現、全区間allocation 0を確認。同じCoreのSHA256一致を確認した直前のBurst8条件・96行も併記。`FullBenchmark-2026-11-21-final.csv` / `.json`と`Benchmark.md`参照。過去の全体値は履歴として保持し、既存managed APIとBurst入口を区別している。
+
 ## A. 基本仕様
 - [x] ffloat 4byte / Q16.16
 - [x] funit 4byte / Q1.30
@@ -22,7 +32,7 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
   - `fDeterminismTests.StructSizes`（Marshal.SizeOf と unsafe sizeof の両方）
 
 ## B. Core分離
-- [x] CoreにUnityEngineなし（`Runtime/Core/fMath.asmdef` noEngineReferences、netstandard2.1ビルドガード）
+- [x] 数値演算は整数のみ。Burst 2入口の属性用に組込みEngineモジュールを参照（以前のnoEngineReferences方針を変更、`Burst.md`参照）
 - [x] Native Plugin依存なし（DllImport・FMATH_ENABLE_NATIVE_PLUGIN削除）
 - [x] Runtime LUT生成なし（`Editor/GenerateTrigLut.cs` がdecimal級数でオフライン生成、`verify-lut` で一致確認）
 - [x] float混合演算がSimulation API外（float/double operator・コンストラクタ削除。float→fixedは `fMath.Unity` のみ）
@@ -122,6 +132,6 @@ Unity 6000.6.0f1 Editor Mono（package testables、PlayMode 133テスト）。
 - [x] ±2048m Validation Domainで破綻なし
 - [x] 小角度判定で必要精度維持
 - [x] Snapshotサイズが設計範囲内（8 agents 480 B）
-- [x] Burst不要
+- [x] Burst 2依存へ変更。既存APIのmanaged実行とnative入口を維持（`Burst.md`参照）
 - [x] Native Plugin不要
 - [ ] モバイルRollback用途として採用可（Android/iOS実機のhash一致と性能確認後に判定）

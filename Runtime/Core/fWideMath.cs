@@ -164,29 +164,21 @@ internal static class fWideMath
     #endregion
 
     #region Square root
-    /// <summary>floor(sqrt(value)) for the full uint64 range (digit-by-digit, exact).</summary>
+    /// <summary>floor(sqrt(value)) for the full uint64 range (integer Newton iteration, exact).</summary>
     internal static ulong IntegerSqrt(ulong value)
     {
         if (value == 0)
             return 0;
-        ulong result = 0;
-        ulong bit = 1UL << ((BitLength(value) - 1) & ~1); // highest power of four <= value
-
-        while (bit != 0)
+        // Start above the root. Newton estimates decrease until the exact floor is reached;
+        // at a non-square the next estimate can increase again, so stop before accepting it.
+        ulong root = 1UL << ((BitLength(value) + 1) >> 1);
+        while (true)
         {
-            ulong trial = result + bit;
-            if (value >= trial)
-            {
-                value -= trial;
-                result = (result >> 1) + bit;
-            }
-            else
-            {
-                result >>= 1;
-            }
-            bit >>= 2;
+            ulong next = (root + value / root) >> 1;
+            if (next >= root)
+                return root;
+            root = next;
         }
-        return result;
     }
 
     /// <summary>
@@ -314,11 +306,32 @@ internal static class fWideMath
             den = (long)IntegerSqrtRounded(sum << 2);      // 2|v| >= 2^30, sum < 2^62
             numeratorShift = 31;
         }
-        ox = (int)DivideRoundToEven(sx << numeratorShift, den);
-        oy = (int)DivideRoundToEven(sy << numeratorShift, den);
-        oz = (int)DivideRoundToEven(sz << numeratorShift, den);
-        ow = (int)DivideRoundToEven(sw << numeratorShift, den);
+        // Share one division across all components. The reciprocal estimate is always below
+        // the exact quotient by less than one: |s| < 2^31 (shift 30), or < 2^30 (shift 31).
+        // Correcting its remainder therefore restores the exact result before ties-to-even.
+        ulong divisor = (ulong)den;
+        ulong reciprocal = (1UL << 62) / divisor;
+        ox = NormalizeComponentQ30(sx, divisor, reciprocal, numeratorShift);
+        oy = NormalizeComponentQ30(sy, divisor, reciprocal, numeratorShift);
+        oz = NormalizeComponentQ30(sz, divisor, reciprocal, numeratorShift);
+        ow = sw == 0 ? 0 : NormalizeComponentQ30(sw, divisor, reciprocal, numeratorShift);
         return true;
+    }
+
+    static int NormalizeComponentQ30(long component, ulong divisor, ulong reciprocal, int numeratorShift)
+    {
+        ulong magnitude = component < 0 ? (ulong)-component : (ulong)component;
+        ulong quotient = (magnitude * reciprocal) >> (62 - numeratorShift);
+        ulong remainder = (magnitude << numeratorShift) - quotient * divisor;
+        if (remainder >= divisor)
+        {
+            quotient++;
+            remainder -= divisor;
+        }
+        ulong rest = divisor - remainder;
+        if (remainder > rest || (remainder == rest && (quotient & 1UL) != 0))
+            quotient++;
+        return component < 0 ? -(int)quotient : (int)quotient;
     }
 
     /// <summary>

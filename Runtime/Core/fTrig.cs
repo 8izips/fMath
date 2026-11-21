@@ -92,7 +92,7 @@ public static class fTrig
 
     #region Atan2
     /// <summary>atan(t) for t in [0, 1] given as Q1.30, in Angle32 raw units ([0, 2^29]).</summary>
-    static uint AtanOctant(ulong ratioQ30)
+    internal static uint AtanOctant(ulong ratioQ30)
     {
         uint[] table = fTrigAtanLut.Table;
         int index = (int)(ratioQ30 >> ATAN_INDEX_SHIFT);

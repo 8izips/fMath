@@ -1,0 +1,338 @@
+{
+  "environment": "Unity: 6000.6.7f1\nCPU: Intel(R) Core(TM) Ultra 9 285K\nOS: Windows 11  (10.0.26300)\nGPU: NVIDIA GeForce RTX 5080\nAPI: Direct3D11\nDevelopment: True\nBackend: Mono; Burst: built-in2.0.0 AOT, all six actual entry markers native\nFMATH_VALIDATE: False\nSeed617; inputs1024; operations307200; 6 AB/BA pairs; scalar checksum in timing, batch checksum outside timing; allocation before/after\nProfiler disconnected; Built-in pipeline, 640x360; FPS uncapped for fixed-operation throughput; camera rendering outside timing\n",
+  "parity": "100000 cases each; scalar/batch native=true; raw/status equal; sentinels/counts/diagnostics passed; checksum=344533735169",
+  "validate_environment": "Unity: 6000.6.7f1\nCPU: Intel(R) Core(TM) Ultra 9 285K\nOS: Windows 11  (10.0.26300)\nGPU: NVIDIA GeForce RTX 5080\nAPI: Direct3D11\nDevelopment: True\nBackend: Mono; Burst: built-in2.0.0 AOT, all six actual entry markers native\nFMATH_VALIDATE: True\nSeed617; inputs1024; operations307200; 6 AB/BA pairs; scalar checksum in timing, batch checksum outside timing; allocation before/after\nProfiler disconnected; Built-in pipeline, 640x360; FPS uncapped for fixed-operation throughput; camera rendering outside timing\n",
+  "validate_parity": "100000 cases each; scalar/batch native=true; raw/status equal; sentinels/counts/diagnostics passed; checksum=344533735169",
+  "row_count": 96,
+  "allocation_bytes": 0,
+  "results": [
+    {
+      "dataset": "normalize gameplay",
+      "call_mode": "batch1024",
+      "managed_mean": 66.56960720486111,
+      "burst_mean": 23.51996527777778,
+      "reduction_percent": 64.66861340281382,
+      "managed_range": [
+        65.34342447916667,
+        67.79264322916667
+      ],
+      "burst_range": [
+        23.190755208333332,
+        24.400716145833332
+      ],
+      "managed_median": 66.67008463541666,
+      "burst_median": 23.373209635416664,
+      "managed_samples": [
+        66.99251302083333,
+        67.79264322916667,
+        65.78776041666667,
+        67.15364583333333,
+        66.34765625,
+        65.34342447916667
+      ],
+      "burst_samples": [
+        23.194661458333332,
+        23.443684895833332,
+        23.587239583333332,
+        24.400716145833332,
+        23.302734375,
+        23.190755208333332
+      ]
+    },
+    {
+      "dataset": "normalize gameplay",
+      "call_mode": "scalar",
+      "managed_mean": 69.04909939236111,
+      "burst_mean": 43.38286675347222,
+      "reduction_percent": 37.17098827465423,
+      "managed_range": [
+        68.05989583333333,
+        69.92838541666667
+      ],
+      "burst_range": [
+        38.906575520833336,
+        47.079427083333336
+      ],
+      "managed_median": 68.99332682291666,
+      "burst_median": 43.97688802083333,
+      "managed_samples": [
+        69.0380859375,
+        68.94856770833333,
+        69.3779296875,
+        69.92838541666667,
+        68.05989583333333,
+        68.94173177083333
+      ],
+      "burst_samples": [
+        38.906575520833336,
+        47.079427083333336,
+        42.190104166666664,
+        45.763671875,
+        39.471354166666664,
+        46.886067708333336
+      ]
+    },
+    {
+      "dataset": "slerp close",
+      "call_mode": "batch1024",
+      "managed_mean": 77.01671006944444,
+      "burst_mean": 29.891438802083336,
+      "reduction_percent": 61.188372269951785,
+      "managed_range": [
+        76.08951822916667,
+        77.89973958333333
+      ],
+      "burst_range": [
+        28.7744140625,
+        31.307291666666668
+      ],
+      "managed_median": 76.78678385416666,
+      "burst_median": 29.554036458333336,
+      "managed_samples": [
+        76.75748697916667,
+        77.77994791666667,
+        76.08951822916667,
+        77.89973958333333,
+        76.80696614583333,
+        76.7666015625
+      ],
+      "burst_samples": [
+        29.645182291666668,
+        31.307291666666668,
+        29.462890625,
+        31.029947916666668,
+        29.12890625,
+        28.7744140625
+      ]
+    },
+    {
+      "dataset": "slerp close",
+      "call_mode": "scalar",
+      "managed_mean": 76.32492404513889,
+      "burst_mean": 48.649251302083336,
+      "reduction_percent": 36.26033447041236,
+      "managed_range": [
+        75.32454427083333,
+        78.103515625
+      ],
+      "burst_range": [
+        48.122721354166664,
+        49.347330729166664
+      ],
+      "managed_median": 76.02132161458334,
+      "burst_median": 48.433919270833336,
+      "managed_samples": [
+        78.103515625,
+        76.90299479166667,
+        75.32454427083333,
+        75.57584635416667,
+        75.61002604166667,
+        76.4326171875
+      ],
+      "burst_samples": [
+        48.380208333333336,
+        48.487630208333336,
+        48.122721354166664,
+        49.240885416666664,
+        49.347330729166664,
+        48.316731770833336
+      ]
+    },
+    {
+      "dataset": "slerp random",
+      "call_mode": "batch1024",
+      "managed_mean": 163.63254123263889,
+      "burst_mean": 85.63020833333334,
+      "reduction_percent": 47.66920583871421,
+      "managed_range": [
+        160.845703125,
+        166.8916015625
+      ],
+      "burst_range": [
+        83.2509765625,
+        92.36490885416667
+      ],
+      "managed_median": 163.28515625,
+      "burst_median": 84.466796875,
+      "managed_samples": [
+        162.57942708333334,
+        163.99088541666666,
+        160.845703125,
+        166.8916015625,
+        162.19661458333334,
+        165.291015625
+      ],
+      "burst_samples": [
+        85.50260416666667,
+        84.51204427083333,
+        83.72916666666667,
+        92.36490885416667,
+        84.42154947916667,
+        83.2509765625
+      ]
+    },
+    {
+      "dataset": "slerp random",
+      "call_mode": "scalar",
+      "managed_mean": 163.314453125,
+      "burst_mean": 94.16357421875,
+      "reduction_percent": 42.34216726263797,
+      "managed_range": [
+        159.61165364583334,
+        172.21028645833334
+      ],
+      "burst_range": [
+        93.14811197916667,
+        94.87727864583333
+      ],
+      "managed_median": 161.65071614583334,
+      "burst_median": 94.25325520833334,
+      "managed_samples": [
+        162.08333333333334,
+        161.02571614583334,
+        161.21809895833334,
+        172.21028645833334,
+        163.73763020833334,
+        159.61165364583334
+      ],
+      "burst_samples": [
+        94.478515625,
+        93.14811197916667,
+        93.97102864583333,
+        94.87727864583333,
+        94.4306640625,
+        94.07584635416667
+      ]
+    },
+    {
+      "dataset": "sqrt",
+      "call_mode": "batch1024",
+      "managed_mean": 25.58761935763889,
+      "burst_mean": 10.373155381944445,
+      "reduction_percent": 59.46025600522442,
+      "managed_range": [
+        25.399088541666668,
+        25.8662109375
+      ],
+      "burst_range": [
+        10.177734375,
+        10.525390625
+      ],
+      "managed_median": 25.549153645833332,
+      "burst_median": 10.35498046875,
+      "managed_samples": [
+        25.464192708333332,
+        25.634114583333332,
+        25.8662109375,
+        25.4580078125,
+        25.399088541666668,
+        25.7041015625
+      ],
+      "burst_samples": [
+        10.312825520833334,
+        10.525390625,
+        10.333984375,
+        10.3759765625,
+        10.513020833333334,
+        10.177734375
+      ]
+    },
+    {
+      "dataset": "sqrt",
+      "call_mode": "scalar",
+      "managed_mean": 24.64187282986111,
+      "burst_mean": 18.013020833333336,
+      "reduction_percent": 26.90076376213949,
+      "managed_range": [
+        24.162760416666668,
+        25.107747395833332
+      ],
+      "burst_range": [
+        17.6494140625,
+        18.620768229166668
+      ],
+      "managed_median": 24.651204427083336,
+      "burst_median": 17.885091145833336,
+      "managed_samples": [
+        24.6416015625,
+        25.107747395833332,
+        24.390625,
+        24.660807291666668,
+        24.162760416666668,
+        24.8876953125
+      ],
+      "burst_samples": [
+        17.8984375,
+        18.209635416666668,
+        18.620768229166668,
+        17.828125,
+        17.871744791666668,
+        17.6494140625
+      ]
+    }
+  ],
+  "source_sha256": {
+    "Runtime/Core/AssemblyInfo.cs": "5327d9683b29aef9be2878e9341e41ec3825cde2684f7f2eed449dc6d2b307b6",
+    "Runtime/Core/fAngle.cs": "bb96a4d333b9e75793d5827360fc7866c0af21e781e348dc9a8740bb5005a3b4",
+    "Runtime/Core/ffloat.cs": "866c4baa334e557542269b19a8c3e6e582c909376c3cb8242d09b1043a97d53a",
+    "Runtime/Core/fMathBurst.cs": "b74b3279b9b31f9323581f937b468715f473525d8a622ec8f4f2d8d7cd1113fe",
+    "Runtime/Core/fMathFormatVersion.cs": "ceb85e486862287ae3e1201ed4e964eecf275aa8c88fd09079abac00bb9f7f30",
+    "Runtime/Core/fMathValidation.cs": "e1f76903715447895ef147bb7b368dd9d0026a6104d8d4129c0fad99f55fdd77",
+    "Runtime/Core/fQuaternion.cs": "8187ad9a46698d5131b2832775d3e01edce60fe5909cc91030bf49c1bafea32f",
+    "Runtime/Core/fTrig.cs": "ae7d429a877572d8ae8d50f9c1bda74db45443be94e634cc8f78eb15d3a9a97e",
+    "Runtime/Core/fTrigAtanLut.cs": "5fe4f2a2a9b181f232c5450dcecf25178ba25e2095b7cad15df5deaedf533670",
+    "Runtime/Core/fTrigSinQuarterLut.cs": "cbb7b30a3f6f2579082874d565a8a6d7b52ea013b8ce366c121bcc509f5c9e5f",
+    "Runtime/Core/funit.cs": "0d49696f2dd0627612b5d72c9fda1a38722a496b065dd5112978eab3cc4a11bc",
+    "Runtime/Core/fUnitVector2.cs": "aa48ae3adc2256829c09424281a452c2ce5ec44844ef3898c0e4e15051199753",
+    "Runtime/Core/fUnitVector3.cs": "26943012f089121ce5d3591b0ebc50b280dc477d682413e02a282489c7710173",
+    "Runtime/Core/fVector2.cs": "230ef639b7b395d578d759aa71cead99ef9c65c7820b4ac86d076faa86f6750d",
+    "Runtime/Core/fVector3.cs": "8dc7f7b464b4f18740d03303f6b4513198ef3532d6e7be317b85e9e06f7ad4c5",
+    "Runtime/Core/fWideMath.cs": "2701c267b95599bb9b1b12e19305d86d86a852cf26a1fbe1069cd6201b8d8734",
+    "Runtime/Core/fWideVector3.cs": "3df872cf4273f822b03191c986f8c97ec73aaec867cc6c191a4c267a02ac796e",
+    "Runtime/Core/fMath.asmdef": "b0635afb5e2b1b62316cae91b0ee9a19a74a420e487096ee818d4b1ee080104e",
+    "package.json": "b2120da8e8958d9a30fd73fb837529be240134338bf1c12dffa6a7aed0f37b57",
+    "Tests~/Runtime/fMathBurstTests.cs": "1c1ac88dd324ab22a5974cccdff3921151cdb2f67c14f64a16a02ebcb2fb6f37",
+    "Tests~/Diagnostics/BurstBenchmark~/BurstBench.cs": "5ab9bb05259cab1bdc3a7709cd5121dd96441056aee58e1f2a5e5a6580a28d3f",
+    "Tests~/Diagnostics/BurstBenchmark~/BurstBuild.cs": "7aaa6e577b2754b9283be61079e1c8a38ea13fbea1891cf40ab9fc54e79ec256"
+  },
+  "tested_source_sha256": {
+    "Runtime/Core/AssemblyInfo.cs": "6c1ce294ba92d6d2e365ccff0ad4e373fb8b80e8595c5a1f91071a65307a8372",
+    "Runtime/Core/fAngle.cs": "bb96a4d333b9e75793d5827360fc7866c0af21e781e348dc9a8740bb5005a3b4",
+    "Runtime/Core/ffloat.cs": "866c4baa334e557542269b19a8c3e6e582c909376c3cb8242d09b1043a97d53a",
+    "Runtime/Core/fMathBurst.cs": "b74b3279b9b31f9323581f937b468715f473525d8a622ec8f4f2d8d7cd1113fe",
+    "Runtime/Core/fMathFormatVersion.cs": "ceb85e486862287ae3e1201ed4e964eecf275aa8c88fd09079abac00bb9f7f30",
+    "Runtime/Core/fMathValidation.cs": "e1f76903715447895ef147bb7b368dd9d0026a6104d8d4129c0fad99f55fdd77",
+    "Runtime/Core/fQuaternion.cs": "8187ad9a46698d5131b2832775d3e01edce60fe5909cc91030bf49c1bafea32f",
+    "Runtime/Core/fTrig.cs": "ae7d429a877572d8ae8d50f9c1bda74db45443be94e634cc8f78eb15d3a9a97e",
+    "Runtime/Core/fTrigAtanLut.cs": "5fe4f2a2a9b181f232c5450dcecf25178ba25e2095b7cad15df5deaedf533670",
+    "Runtime/Core/fTrigSinQuarterLut.cs": "cbb7b30a3f6f2579082874d565a8a6d7b52ea013b8ce366c121bcc509f5c9e5f",
+    "Runtime/Core/funit.cs": "0d49696f2dd0627612b5d72c9fda1a38722a496b065dd5112978eab3cc4a11bc",
+    "Runtime/Core/fUnitVector2.cs": "aa48ae3adc2256829c09424281a452c2ce5ec44844ef3898c0e4e15051199753",
+    "Runtime/Core/fUnitVector3.cs": "26943012f089121ce5d3591b0ebc50b280dc477d682413e02a282489c7710173",
+    "Runtime/Core/fVector2.cs": "230ef639b7b395d578d759aa71cead99ef9c65c7820b4ac86d076faa86f6750d",
+    "Runtime/Core/fVector3.cs": "8dc7f7b464b4f18740d03303f6b4513198ef3532d6e7be317b85e9e06f7ad4c5",
+    "Runtime/Core/fWideMath.cs": "2701c267b95599bb9b1b12e19305d86d86a852cf26a1fbe1069cd6201b8d8734",
+    "Runtime/Core/fWideVector3.cs": "3df872cf4273f822b03191c986f8c97ec73aaec867cc6c191a4c267a02ac796e",
+    "Runtime/Core/fMath.asmdef": "b0635afb5e2b1b62316cae91b0ee9a19a74a420e487096ee818d4b1ee080104e",
+    "Tests~/Runtime/fMathBurstTests.cs": "078a4c6c8db739cdfa6047a460049662e44fbd4dd68f1da35ae78126f7bf9c7a",
+    "Tests~/Diagnostics/BurstBenchmark~/BurstBench.cs": "5ab9bb05259cab1bdc3a7709cd5121dd96441056aee58e1f2a5e5a6580a28d3f",
+    "Tests~/Diagnostics/BurstBenchmark~/BurstBuild.cs": "2835a1f5e4226b0b587f41936a6b48222c7dec968ee6525a5878e3e5b10adc85"
+  },
+  "source_notes": [
+    "temporary Core AssemblyInfo adds only friend access for the retained old KernelBench",
+    "Burst test source has a comment clarification after execution; logic unchanged",
+    "BurstBuild has only the Advisor-requested causality comment correction after execution; logic unchanged"
+  ],
+  "native_artifacts_sha256": {
+    "BurstBench_Data\\Plugins\\x86_64\\lib_burst_generated.dll": "fe8707501a6f4a43b73780f30c1a70d76faeb1a5543a99553de626a451771229",
+    "BurstBench_Data\\Plugins\\x86_64\\lib_burst_generated.pdb": "ccb269e97f3f1c77668262602face834ef6eb556f128ea90a47cc9002ada305b",
+    "BurstBench_BackUpThisFolder_ButDontShipItWithYourGame\\x86_64\\lib_burst_generated.txt": "725c338f58f190c126d6f85736e88ab05012a9ab60abd750d3e950c7eda5a965"
+  },
+  "limitations": [
+    "Windows x64 Mono Development only; no IL2CPP/mobile/Release evidence",
+    "6 alternating pairs within one process; no independent process replicates",
+    "scalar checksum in timing; batch output checksum outside timing; compare within call_mode",
+    "Built-in pipeline; graphics workload not measured",
+    "initial managed fallback Player rejected; explicit AOT settings and clean build used"
+  ]
+}

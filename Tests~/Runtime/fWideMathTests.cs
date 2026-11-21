@@ -132,6 +132,21 @@ namespace fMath.Tests
         }
 
         [Test]
+        public void IntegerSqrt_SquareAndRoundingBoundaries()
+        {
+            ulong[] roots = { 0, 1, 2, 3, 255, 256, 65535, 65536, 1UL << 30, (1UL << 32) - 1 };
+            foreach (ulong root in roots)
+            {
+                ulong square = root * root;
+                Assert.That(fWideMath.IntegerSqrt(square), Is.EqualTo(root));
+                if (root != 0)
+                    Assert.That(fWideMath.IntegerSqrt(square - 1), Is.EqualTo(root - 1));
+                Assert.That(fWideMath.IntegerSqrtRounded(square + root), Is.EqualTo(root));
+                Assert.That(fWideMath.IntegerSqrtRounded(square + root + 1), Is.EqualTo(root + 1));
+            }
+        }
+
+        [Test]
         public void IntegerSqrtRounded_IsNearestAndMonotonic()
         {
             ulong prev = 0;

@@ -1,0 +1,352 @@
+{
+  "date": "2026-11-21",
+  "environment": "Unity: 6000.6.7f1\nCPU: Intel(R) Core(TM) Ultra 9 285K\nOS: Windows 11  (10.0.26300)\nGPU: NVIDIA GeForce RTX 5080\nGraphics API: Direct3D11\nDevelopment: True\nBackend: Mono\nPackage: built-in Burst 2.0.0; this suite calls managed scalar APIs\nFMATH_VALIDATE: False\nPipeline: Built-in, isolated numeric harness (URP not exercised)\nProfiler: disconnected; Deep Profiling off\nFPS: uncapped; fixed-operation throughput blocks\nMicro iterations: 2000000 (Slerp: 500000)\nGame frames: 3000 (snapshot copies: 300000)\nRepetitions: 6\nStopwatch frequency: 10000000\n",
+  "source_sha256": {
+    "Runtime/Core/AssemblyInfo.cs": "5327d9683b29aef9be2878e9341e41ec3825cde2684f7f2eed449dc6d2b307b6",
+    "Runtime/Core/fAngle.cs": "bb96a4d333b9e75793d5827360fc7866c0af21e781e348dc9a8740bb5005a3b4",
+    "Runtime/Core/ffloat.cs": "866c4baa334e557542269b19a8c3e6e582c909376c3cb8242d09b1043a97d53a",
+    "Runtime/Core/fMathBurst.cs": "b74b3279b9b31f9323581f937b468715f473525d8a622ec8f4f2d8d7cd1113fe",
+    "Runtime/Core/fMathFormatVersion.cs": "ceb85e486862287ae3e1201ed4e964eecf275aa8c88fd09079abac00bb9f7f30",
+    "Runtime/Core/fMathValidation.cs": "e1f76903715447895ef147bb7b368dd9d0026a6104d8d4129c0fad99f55fdd77",
+    "Runtime/Core/fQuaternion.cs": "8187ad9a46698d5131b2832775d3e01edce60fe5909cc91030bf49c1bafea32f",
+    "Runtime/Core/fTrig.cs": "ae7d429a877572d8ae8d50f9c1bda74db45443be94e634cc8f78eb15d3a9a97e",
+    "Runtime/Core/fTrigAtanLut.cs": "5fe4f2a2a9b181f232c5450dcecf25178ba25e2095b7cad15df5deaedf533670",
+    "Runtime/Core/fTrigSinQuarterLut.cs": "cbb7b30a3f6f2579082874d565a8a6d7b52ea013b8ce366c121bcc509f5c9e5f",
+    "Runtime/Core/funit.cs": "0d49696f2dd0627612b5d72c9fda1a38722a496b065dd5112978eab3cc4a11bc",
+    "Runtime/Core/fUnitVector2.cs": "aa48ae3adc2256829c09424281a452c2ce5ec44844ef3898c0e4e15051199753",
+    "Runtime/Core/fUnitVector3.cs": "26943012f089121ce5d3591b0ebc50b280dc477d682413e02a282489c7710173",
+    "Runtime/Core/fVector2.cs": "230ef639b7b395d578d759aa71cead99ef9c65c7820b4ac86d076faa86f6750d",
+    "Runtime/Core/fVector3.cs": "8dc7f7b464b4f18740d03303f6b4513198ef3532d6e7be317b85e9e06f7ad4c5",
+    "Runtime/Core/fWideMath.cs": "2701c267b95599bb9b1b12e19305d86d86a852cf26a1fbe1069cd6201b8d8734",
+    "Runtime/Core/fWideVector3.cs": "3df872cf4273f822b03191c986f8c97ec73aaec867cc6c191a4c267a02ac796e",
+    "Runtime/Core/fMath.asmdef": "b0635afb5e2b1b62316cae91b0ee9a19a74a420e487096ee818d4b1ee080104e",
+    "package.json": "b2120da8e8958d9a30fd73fb837529be240134338bf1c12dffa6a7aed0f37b57",
+    "Tests~/Diagnostics/fMathBenchmark.cs": "54bec26c92facac3f71bdb02a1a45b9b1ebb7f5e70e9ebf46b1cc35bf73a0a74",
+    "Tests~/Diagnostics/fDeterministicAgentSimulation.cs": "84f9cfed02061a6f622a2bc06b3d5cbaa66e4c6d1b334302d4928c2c123c8722",
+    "Tests~/Diagnostics/FullBenchmark~/FullBenchmark.cs": "cb513d393f5c3d12a406b36c22f70613debcf7f8cd424144b26d8fb3c930e5bd",
+    "Tests~/Diagnostics/FullBenchmark~/FullBenchmarkBuild.cs": "edf3b018fc6cf03d4a230d14095a5babc1d89a8f294d95e3b313a60b88ac36d9"
+  },
+  "binary_sha256": {
+    "FullBenchmark.exe": "3726509af94bdacbfe23f85da13109a7e70fb7d61913506e98690bd3208b2fd7",
+    "FullBenchmark_Data/Managed/fMath.Diagnostics.dll": "0184a7316e8834d4a8831e4b66e63c8bd4f9862eff19be9c1ce193bc421ff322",
+    "FullBenchmark_Data/Managed/fMath.dll": "7843e63b37e1ae1a077033540ccb2d927f0646843361d3a2ae806bb3f33a77a7",
+    "FullBenchmark_Data/Managed/fMath.FullBenchmark.dll": "9758e7a91409566bb72831eaef33fa8dddad35496f2f76d2d347a249a46b698a",
+    "FullBenchmark_Data/Plugins/x86_64/lib_burst_generated.dll": "6179f014784e32edd83f2030716152b21a01690636f5258cd181026be508f0ae",
+    "FullBenchmark_Data/Plugins/x86_64/lib_burst_generated.pdb": "1125475e6a68af3e4bfc85b9e329edd4c5567c71a4c853cb907e879c2592fabc",
+    "FullBenchmark_BackUpThisFolder_ButDontShipItWithYourGame/x86_64/lib_burst_generated.txt": "725c338f58f190c126d6f85736e88ab05012a9ab60abd750d3e950c7eda5a965"
+  },
+  "capture": {
+    "rows": 108,
+    "groups": 12,
+    "repetitions": 6,
+    "group_checksum_repeatable": true,
+    "all_measured_allocated_bytes_zero": true,
+    "first_repetition_reviewed_before_remaining_runs": true
+  },
+  "summary": [
+    {
+      "suite": "micro",
+      "name": "ffloat add",
+      "mean": 6.891350000000001,
+      "median": 6.883825,
+      "min": 6.8744000000000005,
+      "max": 6.91805,
+      "runs": [
+        6.911000000000001,
+        6.8783,
+        6.88935,
+        6.877000000000001,
+        6.91805,
+        6.8744000000000005
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat mul",
+      "mean": 11.952766666666667,
+      "median": 11.924475000000001,
+      "min": 11.8391,
+      "max": 12.09735,
+      "runs": [
+        11.89165,
+        12.05005,
+        12.09735,
+        11.88115,
+        11.8391,
+        11.9573
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat div",
+      "mean": 14.829008333333334,
+      "median": 14.764125,
+      "min": 14.44025,
+      "max": 15.2788,
+      "runs": [
+        14.658000000000001,
+        14.44025,
+        15.2788,
+        14.50815,
+        15.2186,
+        14.87025
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat sqrt",
+      "mean": 29.14864166666667,
+      "median": 29.027175,
+      "min": 28.75335,
+      "max": 29.7234,
+      "runs": [
+        29.37515,
+        28.75335,
+        29.042,
+        29.7234,
+        29.01235,
+        28.9856
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fTrig sin+cos",
+      "mean": 19.30946666666667,
+      "median": 19.274375,
+      "min": 19.04035,
+      "max": 19.710150000000002,
+      "runs": [
+        19.430300000000003,
+        19.710150000000002,
+        19.3579,
+        19.12725,
+        19.04035,
+        19.19085
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fTrig atan2",
+      "mean": 19.781750000000002,
+      "median": 19.7346,
+      "min": 19.3773,
+      "max": 20.30895,
+      "runs": [
+        20.044600000000003,
+        19.620150000000002,
+        20.30895,
+        19.3773,
+        19.84905,
+        19.49045
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 dot (wide)",
+      "mean": 7.308041666666667,
+      "median": 7.3074,
+      "min": 7.296950000000001,
+      "max": 7.319050000000001,
+      "runs": [
+        7.296950000000001,
+        7.311100000000001,
+        7.3037,
+        7.301,
+        7.316450000000001,
+        7.319050000000001
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 cross",
+      "mean": 29.543133333333333,
+      "median": 29.433525000000003,
+      "min": 29.086650000000002,
+      "max": 30.377450000000003,
+      "runs": [
+        30.377450000000003,
+        29.43165,
+        29.086650000000002,
+        29.4354,
+        29.09375,
+        29.8339
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 distance squared (wide)",
+      "mean": 7.4271666666666665,
+      "median": 7.404350000000001,
+      "min": 7.378,
+      "max": 7.52745,
+      "runs": [
+        7.40195,
+        7.4042,
+        7.52745,
+        7.378,
+        7.4469,
+        7.4045000000000005
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 normalize",
+      "mean": 62.19833333333334,
+      "median": 62.16315,
+      "min": 60.455600000000004,
+      "max": 64.13195,
+      "runs": [
+        60.455600000000004,
+        62.0429,
+        60.53795,
+        63.738200000000006,
+        62.2834,
+        64.13195
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion multiply",
+      "mean": 31.92709166666667,
+      "median": 31.904025,
+      "min": 31.2813,
+      "max": 32.4558,
+      "runs": [
+        31.728450000000002,
+        31.8533,
+        31.2813,
+        31.95475,
+        32.4558,
+        32.28895
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion rotate vector",
+      "mean": 47.68740833333334,
+      "median": 47.419225,
+      "min": 46.69885,
+      "max": 49.65375,
+      "runs": [
+        47.647200000000005,
+        47.174400000000006,
+        49.65375,
+        46.69885,
+        47.759,
+        47.19125
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion slerp",
+      "mean": 160.4305,
+      "median": 160.5152,
+      "min": 155.4362,
+      "max": 165.02020000000002,
+      "runs": [
+        161.0762,
+        160.2974,
+        160.02,
+        155.4362,
+        165.02020000000002,
+        160.733
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: normal x1",
+      "mean": 6025.388888888889,
+      "median": 6017.166666666667,
+      "min": 6000.766666666666,
+      "max": 6076.533333333334,
+      "runs": [
+        6076.533333333334,
+        6022.1,
+        6012.233333333334,
+        6000.766666666666,
+        6028.933333333333,
+        6011.766666666666
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+2",
+      "mean": 16352.705555555558,
+      "median": 16289.050000000001,
+      "min": 16272.66666666667,
+      "max": 16678.26666666667,
+      "runs": [
+        16678.26666666667,
+        16284.233333333335,
+        16302.966666666667,
+        16287.433333333336,
+        16272.66666666667,
+        16290.666666666666
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+4",
+      "mean": 26559.4,
+      "median": 26566.783333333333,
+      "min": 26473.333333333332,
+      "max": 26620.833333333332,
+      "runs": [
+        26620.833333333332,
+        26508.066666666673,
+        26473.333333333332,
+        26620.6,
+        26567.5,
+        26566.066666666666
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+8",
+      "mean": 47228.311111111114,
+      "median": 47117.883333333346,
+      "min": 47060.433333333334,
+      "max": 47585.666666666664,
+      "runs": [
+        47121.16666666668,
+        47069.3,
+        47060.433333333334,
+        47585.666666666664,
+        47114.60000000001,
+        47418.7
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "snapshot save+load (8 agents, 480 B)",
+      "mean": 50.611111111111114,
+      "median": 50.583,
+      "min": 50.032666666666664,
+      "max": 51.311,
+      "runs": [
+        50.676,
+        50.49,
+        50.195,
+        51.311,
+        50.032666666666664,
+        50.962
+      ]
+    }
+  ],
+  "burst_evidence_reused": {
+    "file": "BurstBenchmark-2026-11-21.json",
+    "sha256": "ab6150444cbc2c8bd94f1f2e85de30d61b02affb55c64141de9369dd4e86d96f",
+    "raw": "BurstBenchmark-2026-11-21.csv",
+    "rows": 96,
+    "core_sources_exactly_match": true,
+    "reason": "Same current arithmetic and Burst entries; previous same-player paired measurement remains applicable. Full18 and Burst pairs are separate processes and input distributions."
+  },
+  "limitations": [
+    "Full18 invokes existing managed APIs; installing Burst does not automatically compile managed callers.",
+    "6 repetitions in one process; not independent process replications.",
+    "Windows x64 Mono Development only; IL2CPP/Release/ARM/mobile untested.",
+    "Built-in rendering harness; URP/GPU workloads excluded.",
+    "Outer CSV group timestamps include setup/warmup; inner ns/op does not. Suite checksum aggregates warmup and all suite cases.",
+    "Temporary Core AssemblyInfo has only extra friend visibility for the old retained benchmark harness; production source is unchanged."
+  ]
+}

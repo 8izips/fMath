@@ -1,0 +1,367 @@
+{
+  "date": "2026-11-21",
+  "environment": "Unity: 6000.6.7f1\nCPU: Intel(R) Core(TM) Ultra 9 285K\nOS: Windows 11  (10.0.26300)\nGPU: NVIDIA GeForce RTX 5080\nGraphics API: Direct3D11\nDevelopment: True\nBackend: Mono\nFMATH_VALIDATE: False\nPipeline: Built-in, isolated numeric harness (URP not exercised)\nProfiler: disconnected; Deep Profiling off\nFPS: uncapped; fixed-operation throughput blocks\nMicro iterations: 2000000 (Slerp: 500000)\nGame frames: 3000 (snapshot copies: 300000)\nRepetitions: 6\nStopwatch frequency: 10000000\n",
+  "source_sha256": {
+    "Runtime/Core/fWideMath.cs": "2701c267b95599bb9b1b12e19305d86d86a852cf26a1fbe1069cd6201b8d8734",
+    "Tests~/Diagnostics/fMathBenchmark.cs": "54bec26c92facac3f71bdb02a1a45b9b1ebb7f5e70e9ebf46b1cc35bf73a0a74",
+    "Tests~/Diagnostics/fDeterministicAgentSimulation.cs": "84f9cfed02061a6f622a2bc06b3d5cbaa66e4c6d1b334302d4928c2c123c8722"
+  },
+  "binary_sha256": {
+    "FullBenchmark.exe": "3726509af94bdacbfe23f85da13109a7e70fb7d61913506e98690bd3208b2fd7",
+    "FullBenchmark_Data/Managed/fMath.dll": "de2fafddf713d8b0123c64f966ba14134bb726395d464a2e15c284189aba31a9",
+    "FullBenchmark_Data/Managed/fMath.Diagnostics.dll": "17dc077a068c3193ebcde728b4c9f783e3c2b771e7e7f709cc6f0433110a3e44",
+    "FullBenchmark_Data/Managed/fMath.FullBenchmark.dll": "4f5052eda4d66ba8dd035ad420940bf08725216f21f9f067ac03a97d0b648319"
+  },
+  "capture": {
+    "repetitions": 6,
+    "rows": 108,
+    "groups": 12,
+    "first_repetition_reviewed_before_remaining_runs": true,
+    "group_checksum_repeatable": true,
+    "all_measured_allocated_bytes_zero": true
+  },
+  "summary": [
+    {
+      "suite": "micro",
+      "name": "ffloat add",
+      "unit": "ns/op",
+      "mean": 6.885233333333334,
+      "median": 6.88125,
+      "min": 6.8726,
+      "max": 6.9119,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        6.9119,
+        6.87695,
+        6.88555,
+        6.890800000000001,
+        6.8726,
+        6.873600000000001
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat mul",
+      "unit": "ns/op",
+      "mean": 11.947925000000001,
+      "median": 11.973825000000001,
+      "min": 11.7895,
+      "max": 12.0911,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        12.0911,
+        11.943050000000001,
+        12.0046,
+        11.8434,
+        12.0159,
+        11.7895
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat div",
+      "unit": "ns/op",
+      "mean": 13.480833333333333,
+      "median": 13.496425,
+      "min": 12.951550000000001,
+      "max": 13.9038,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        13.830950000000001,
+        12.951550000000001,
+        13.41885,
+        13.574,
+        13.9038,
+        13.20585
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "ffloat sqrt",
+      "unit": "ns/op",
+      "mean": 29.102316666666667,
+      "median": 29.0056,
+      "min": 28.87405,
+      "max": 29.6262,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        29.07545,
+        29.6262,
+        28.935750000000002,
+        28.87405,
+        28.89225,
+        29.2102
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fTrig sin+cos",
+      "unit": "ns/op",
+      "mean": 19.422575000000002,
+      "median": 19.42125,
+      "min": 18.98245,
+      "max": 19.86955,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        19.44715,
+        19.86955,
+        19.5774,
+        19.263550000000002,
+        19.39535,
+        18.98245
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fTrig atan2",
+      "unit": "ns/op",
+      "mean": 19.886683333333337,
+      "median": 19.915925,
+      "min": 19.047800000000002,
+      "max": 20.59465,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        20.021150000000002,
+        19.824650000000005,
+        19.950950000000002,
+        19.8809,
+        20.59465,
+        19.047800000000002
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 dot (wide)",
+      "unit": "ns/op",
+      "mean": 7.557291666666667,
+      "median": 7.552475000000001,
+      "min": 7.5466500000000005,
+      "max": 7.573,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        7.573,
+        7.5466500000000005,
+        7.554600000000001,
+        7.56995,
+        7.550350000000001,
+        7.549200000000001
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 cross",
+      "unit": "ns/op",
+      "mean": 29.15605,
+      "median": 28.951725000000003,
+      "min": 28.06485,
+      "max": 30.543750000000003,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        30.543750000000003,
+        30.17605,
+        28.2482,
+        29.3855,
+        28.06485,
+        28.517950000000003
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 distance squared (wide)",
+      "unit": "ns/op",
+      "mean": 7.44355,
+      "median": 7.4053,
+      "min": 7.38825,
+      "max": 7.58335,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        7.3937,
+        7.38825,
+        7.410100000000001,
+        7.4005,
+        7.58335,
+        7.4854
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fVector3 normalize",
+      "unit": "ns/op",
+      "mean": 60.797983333333335,
+      "median": 60.625725,
+      "min": 59.0364,
+      "max": 62.5608,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        60.056200000000004,
+        62.5608,
+        61.954750000000004,
+        61.19525,
+        59.0364,
+        59.984500000000004
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion multiply",
+      "unit": "ns/op",
+      "mean": 30.16175,
+      "median": 30.009675,
+      "min": 29.499750000000002,
+      "max": 31.2897,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        31.2897,
+        29.91325,
+        29.9371,
+        30.082250000000005,
+        29.499750000000002,
+        30.24845
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion rotate vector",
+      "unit": "ns/op",
+      "mean": 47.684450000000005,
+      "median": 47.189375,
+      "min": 46.78925,
+      "max": 50.268800000000006,
+      "operations": 2000000,
+      "allocated_bytes": 0,
+      "runs": [
+        50.268800000000006,
+        46.78925,
+        46.8791,
+        47.790800000000004,
+        46.96145,
+        47.417300000000004
+      ]
+    },
+    {
+      "suite": "micro",
+      "name": "fQuaternion slerp",
+      "unit": "ns/op",
+      "mean": 162.55426666666668,
+      "median": 160.34879999999998,
+      "min": 159.81480000000002,
+      "max": 173.2082,
+      "operations": 500000,
+      "allocated_bytes": 0,
+      "runs": [
+        160.3758,
+        159.9802,
+        160.3218,
+        161.62480000000002,
+        173.2082,
+        159.81480000000002
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: normal x1",
+      "unit": "ns/frame",
+      "mean": 6026.877777777778,
+      "median": 6021.25,
+      "min": 6002.633333333333,
+      "max": 6088.466666666666,
+      "operations": 3000,
+      "allocated_bytes": 0,
+      "runs": [
+        6088.466666666666,
+        6023.0666666666675,
+        6019.433333333333,
+        6004.4,
+        6023.266666666666,
+        6002.633333333333
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+2",
+      "unit": "ns/frame",
+      "mean": 16374.577777777778,
+      "median": 16379.383333333335,
+      "min": 16346.033333333333,
+      "max": 16397.800000000003,
+      "operations": 3000,
+      "allocated_bytes": 0,
+      "runs": [
+        16397.800000000003,
+        16346.033333333333,
+        16355.733333333334,
+        16378.266666666668,
+        16380.5,
+        16389.133333333335
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+4",
+      "unit": "ns/frame",
+      "mean": 26744.88888888889,
+      "median": 26765.483333333334,
+      "min": 26625.800000000007,
+      "max": 26809.633333333335,
+      "operations": 3000,
+      "allocated_bytes": 0,
+      "runs": [
+        26699.16666666667,
+        26809.633333333335,
+        26803.766666666666,
+        26755.7,
+        26625.800000000007,
+        26775.266666666666
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "8 agents: rollback 1+8",
+      "unit": "ns/frame",
+      "mean": 47450.5,
+      "median": 47414.25,
+      "min": 47334.333333333336,
+      "max": 47716.63333333333,
+      "operations": 3000,
+      "allocated_bytes": 0,
+      "runs": [
+        47401.5,
+        47716.63333333333,
+        47482.566666666666,
+        47427.0,
+        47334.333333333336,
+        47340.96666666667
+      ]
+    },
+    {
+      "suite": "game-like",
+      "name": "snapshot save+load (8 agents, 480 B)",
+      "unit": "ns/op",
+      "mean": 64.58355555555556,
+      "median": 64.6235,
+      "min": 63.852333333333334,
+      "max": 65.31466666666667,
+      "operations": 300000,
+      "allocated_bytes": 0,
+      "runs": [
+        63.852333333333334,
+        65.31466666666667,
+        64.98600000000002,
+        64.10133333333333,
+        64.445,
+        64.802
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@ Unit / Normal / Quaternion成分: funit  signed Q1.30
 
 目的は、半径500m程度の3Dアクションゲームを最大8プレイヤーのRollback環境で、小さな状態サイズを保ったまま
 Windows / Android ARM64 / iOS ARM64（Mono / IL2CPP）でbit一致に再実行できる数学基盤を提供すること。
-Burst、Jobs、Native Pluginは不要。
+Unity 6000.6以降と組込みBurst 2.0.0が必要。Jobsと外部Native Pluginは不要。
 
 ## 導入
 
@@ -20,7 +20,7 @@ Unity Package Managerで `https://github.com/8izips/fMath.git` を追加する�
 
 | アセンブリ | 内容 |
 |---|---|
-| `fMath`（Runtime/Core） | 数値型と演算。`noEngineReferences`、UnityEngine非依存 |
+| `fMath`（Runtime/Core） | 整数演算とBurst入口。Burst 2の属性用にUnity組込みモジュールを参照 |
 | `fMath.Unity`（Runtime/Unity） | float / Vector3 / Quaternion との変換（Authoring・Presentation境界専用） |
 | `fMath.Tools.Editor`（Editor） | LUT再生成・検証 |
 | `fMath.Tests`（Tests~/Runtime） | 数値・Unity変換・決定性テストを統合（通常はインポートされない） |
@@ -28,6 +28,12 @@ Unity Package Managerで `https://github.com/8izips/fMath.git` を追加する�
 | `fMath.Diagnostics.Editor`（Tests~/Diagnostics/Editor） | 任意導入の診断メニュー（Editor専用） |
 
 ## 型
+
+`fMathBurst.Sqrt(in value, out result)`、`TryNormalize(in value, out result)`、
+`Slerp(in a, in b, in t, out result)` は同じ整数演算をBurstの単発入口から呼び出す。
+大量処理には対応する同期バッチ入口を使用する（バッファ契約と検証条件は
+[`Documentation~/Burst.md`](Documentation~/Burst.md)）。既存のスカラーAPIも大きなBurst Job内から利用できる。
+Burstを無効にした環境では入口はmanaged処理へフォールバックする。
 
 | 型 | サイズ | 用途 |
 |---|---:|---|
@@ -90,7 +96,7 @@ fAngle facing = fMathUnityConversions.DegreesToAngle(90f);
 ## 精度・性能・決定性
 
 - 精度: `Documentation~/PrecisionReport.md`（生成済みQuaternionの回転誤差と、入力の軸・角度からの総合誤差を別々に記録）
-- 性能: `Documentation~/Benchmark.md`（過去の計測結果と計測方法の変更点。乗算・除算は全反復の結果をchecksumへ反映）
+- 性能: `Documentation~/Benchmark.md`（現行版の全18項目を各6回測定し、同じCoreのBurst比較も掲載。Windows Mono Playerの単発sqrt / normalize / Slerpは約27% / 37% / 42%短縮。条件・変動・未検証環境を併記）
 - 決定性: 固定入力corpus（`Tests~/Determinism/fmath_v2_input_vectors.bin`）に全APIを適用したraw hashと、10000 tickの8 agent simulation hashをgolden値として `Tests~/Runtime/fDeterminismTests.cs` で検証。
   CoreCLR x64とUnity Monoで一致。実機は `Samples~/DeterminismProbe` をビルドして比較する。
 - 受け入れ状況: `Documentation~/AcceptanceChecklist.md`

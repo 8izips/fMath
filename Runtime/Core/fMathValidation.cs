@@ -20,10 +20,12 @@ public enum fMathValidationKind
 ///
 /// Release behaviour never depends on this class: every invalid input already has a documented,
 /// deterministic result (saturation, zero, identity ...). When the scripting define
-/// <c>FMATH_VALIDATE</c> is set, the call sites are compiled in and every such event is counted and
+/// <c>FMATH_VALIDATE</c> is set, the managed call sites are compiled in and every such event is counted and
 /// forwarded to <see cref="Handler"/>, so development and CI builds can surface overflow, divide by
 /// zero, negative sqrt, zero-vector normalization and invalid quaternions.
 /// Without the define the calls are removed by the compiler ([Conditional]) and cost nothing.
+/// Burst omits Report: native calls preserve numeric results but do not update managed counters,
+/// invoke Handler, or throw exceptions from Handler. IsEnabled describes the scripting define only.
 /// </summary>
 public static class fMathValidation
 {
@@ -65,6 +67,9 @@ public static class fMathValidation
     }
 
     [Conditional("FMATH_VALIDATE")]
+#if UNITY_6000_6_OR_NEWER
+    [Unity.Burst.BurstDiscard]
+#endif
     internal static void Report(fMathValidationKind kind, string context)
     {
         Interlocked.Increment(ref _counts[(int)kind]);

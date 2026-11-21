@@ -6,6 +6,14 @@ namespace fMath.Tests
     [TestFixture]
     public class fTrigTests
     {
+        [Test]
+        public void AtanOctant_MatchesGeneralPathAtInterpolationBounds()
+        {
+            ulong[] ratios = { 0, 1, (1UL << 18) - 1, 1UL << 18, 1UL << 29, (1UL << 30) - 1, 1UL << 30 };
+            foreach (ulong ratio in ratios)
+                Assert.That(fTrig.AtanOctant(ratio), Is.EqualTo(fTrig.Atan2Wide((long)ratio, 1L << 30).RawValue));
+        }
+
         const double TurnToRad = 2 * Math.PI / 4294967296.0;
         const double Q30 = 1073741824.0;
         // Upper bound for |LUT interpolation error| in Q1.30 raw units (h^2/8 * 2^30 ~ 19.7 + rounding)
